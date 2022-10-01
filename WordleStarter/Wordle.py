@@ -20,5 +20,14 @@ def wordle():
 
 # Startup code
 
+    word = random.choice(FIVE_LETTER_WORDS).upper()
+    col_num = N_COLS - 1
+    row_num = N_ROWS - 1
+    
+    col_num = 0
+    for x in word:
+        gw.set_square_letter(row=0, col=col_num, ch=x)
+        col_num += 1
+
 if __name__ == "__main__":
     wordle()
