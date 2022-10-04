@@ -18,7 +18,7 @@ def wordle():
             return True
 
         if s.lower() in FIVE_LETTER_WORDS:
-            gw.show_message("Keep guessing")
+            gw.show_message("Keep guessing! You got it!")
         else:
             gw.show_message("Not in word list")
 
@@ -26,14 +26,19 @@ def wordle():
             gw.set_square_color(row=gw.get_current_row(), col=x, color=MISSING_COLOR)
         
         temp_col = 0
-        for x in s: 
+        for x in s:
+            if gw.get_key_color(ch=x) != CORRECT_COLOR:
+                gw.set_key_color(ch=x, color=MISSING_COLOR)
             if x in word:
                 gw.set_square_color(row=gw.get_current_row(), col=temp_col, color=PRESENT_COLOR)
+                if gw.get_key_color(ch=x) != CORRECT_COLOR:
+                    gw.set_key_color(ch=x, color=PRESENT_COLOR)
                 if word[temp_col] == s[temp_col]:
                     gw.set_square_color(row=gw.get_current_row(), col=temp_col, color=CORRECT_COLOR)
+                    gw.set_key_color(ch=x, color=CORRECT_COLOR)
             temp_col += 1
-            
-        gw.set_current_row(gw.get_current_row()+1 if gw.get_current_row() != 5 else gw.get_current_row())
+        
+        gw.set_current_row(gw.get_current_row()+1 if gw.get_current_row() != 5 else 0)
 
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
@@ -45,9 +50,6 @@ def wordle():
     for x in word:
         gw.set_square_letter(row=0, col=temp_col, ch=x)
         temp_col += 1
-    
-    # if gw.get_square_letter(row=gw.get_current_row(), col=0) == ' ':
-    #     gw.set_square_color(row=gw.get_current_row(), col=gw.get_)
 
 if __name__ == "__main__":
     wordle()
